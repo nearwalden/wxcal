@@ -1,0 +1,42 @@
+# The UN population estimate
+type: data
+name: "Berkeley Earth = TAVG, daily, 1degree, time extract"
+description:  "Extracted ttime parameters"
+created: "9/29/2020"
+shortname: best_avg_daily_1deg_temp
+
+source:
+	type: computation
+	data: 
+		- "atlas://wxcal/best_avg_daily_1deg"
+	function: 
+		- "berk.process_time"
+storage:
+	type: files
+	format: csv
+	location:  "file:///Volumes/data/temperature/daily-1deg-sep2020/"
+	files:
+		- "Complete_TAVG_Daily_LatLong1_1880_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1890_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1900_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1910_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1920_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1930_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1940_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1950_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1960_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1970_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1980_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_1990_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_2000_time.csv"
+		- "Complete_TAVG_Daily_LatLong1_2010_time.csv"
+	fields: 
+		- time
+		- year
+		- month
+		- day
+		- day_of_year
+	timeframe: 
+		start: 1880
+		end: 2020		
+
