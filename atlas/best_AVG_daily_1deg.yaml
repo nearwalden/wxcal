@@ -41,6 +41,7 @@ storage:
 		- "Complete_TAVG_Daily_LatLong1_1990.nc"
 		- "Complete_TAVG_Daily_LatLong1_2000.nc"
 		- "Complete_TAVG_Daily_LatLong1_2010.nc"
+metadata:
 	timeframe: 
 		start: 1880
 		end: 2020

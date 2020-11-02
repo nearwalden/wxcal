@@ -4,7 +4,6 @@ name: "Berkeley Earth = TAVG, daily, 1degree, time extract"
 description:  "Extracted ttime parameters"
 created: "9/29/2020"
 shortname: best_avg_daily_1deg_temp
-
 source:
 	type: computation
 	data: 
@@ -13,7 +12,6 @@ source:
 		- "berk.process_time"
 storage:
 	type: files
-	format: csv
 	location:  "file:///Volumes/data/temperature/daily-1deg-sep2020/"
 	files:
 		- "Complete_TAVG_Daily_LatLong1_1880_time.csv"
@@ -30,6 +28,8 @@ storage:
 		- "Complete_TAVG_Daily_LatLong1_1990_time.csv"
 		- "Complete_TAVG_Daily_LatLong1_2000_time.csv"
 		- "Complete_TAVG_Daily_LatLong1_2010_time.csv"
+metadata:
+	format: csv
 	fields: 
 		- time
 		- year
