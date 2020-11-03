@@ -3,44 +3,20 @@ type: data
 name: "Berkeley Earth = TAVG, daily, 1degree"
 created: "9/27/2020"
 shortname: best_avg_daily_1deg
+parameters:
+	Y: [1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010]
 timeframe: 
 		start: 1880
 		end: 2020
 source:
 	type: download
-	URL: 
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1880.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1890.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1900.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1910.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1920.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1930.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1940.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1950.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1960.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1970.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1980.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_1990.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_2000.nc"
-		- "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_2010.nc"
+	URLs: 
+		pattern: "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_%Y.nc"
 storage:
 	type: files
 	location:  "file:///Volumes/data/temperature/daily-1deg-sep2020/"
 	files:
-		- "Complete_TAVG_Daily_LatLong1_1880.nc"
-		- "Complete_TAVG_Daily_LatLong1_1890.nc"
-		- "Complete_TAVG_Daily_LatLong1_1900.nc"
-		- "Complete_TAVG_Daily_LatLong1_1910.nc"
-		- "Complete_TAVG_Daily_LatLong1_1920.nc"
-		- "Complete_TAVG_Daily_LatLong1_1930.nc"
-		- "Complete_TAVG_Daily_LatLong1_1940.nc"
-		- "Complete_TAVG_Daily_LatLong1_1950.nc"
-		- "Complete_TAVG_Daily_LatLong1_1960.nc"
-		- "Complete_TAVG_Daily_LatLong1_1970.nc"
-		- "Complete_TAVG_Daily_LatLong1_1980.nc"
-		- "Complete_TAVG_Daily_LatLong1_1990.nc"
-		- "Complete_TAVG_Daily_LatLong1_2000.nc"
-		- "Complete_TAVG_Daily_LatLong1_2010.nc"
+		pattern: "Complete_TAVG_Daily_LatLong1_%Y.nc"
 metadata:
 	timeframe: 
 		start: 1880

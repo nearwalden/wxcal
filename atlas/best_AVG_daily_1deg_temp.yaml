@@ -30,6 +30,7 @@ storage:
 		- "Complete_TAVG_Daily_LatLong1_1990_temp.csv"
 		- "Complete_TAVG_Daily_LatLong1_2000_temp.csv"
 		- "Complete_TAVG_Daily_LatLong1_2010_temp.csv"
+metadata:
 	format: csv
 	fields: 
 		- latitude
