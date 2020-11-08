@@ -1,0 +1,30 @@
+# The UN population estimate
+type: data
+name: "Berkeley Earth = day of minimum temperature"
+description:  "Extracted ttime parameters"
+created: "11/8/2020"
+shortname: best_avg_daily_1deg_temp_min
+parameters:
+	
+source:
+	type: computation
+	inputs: 
+		- "atlas://wxcal/best_avg_daily_1deg_temp"
+	function: "minmax.min_temp_day"
+storage:
+	type: files
+	location:  "file:///Volumes/data/temperature/daily-1deg-sep2020/minmax/"
+	files:
+		pattern: "Complete_TAVG_Daily_LatLong1_%Y_time.csv"
+metadata:
+	format: csv
+	fields: 
+		- time
+		- year
+		- month
+		- day
+		- day_of_year
+	timeframe: 
+		start: 1880
+		end: 2020		
+
