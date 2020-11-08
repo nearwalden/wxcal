@@ -1,6 +1,6 @@
 # names of files and columns
-
-ll1_dir = "daily-1deg-sep2020/"
+file_loc = "/Volumes/data/temperature/"
+ll1_dir = file_loc + "daily-1deg-sep2020/"
 ll1_filename = "Complete_TAVG_Daily_LatLong1_"
 ll1_filename_short = "TAVG_LL1_"
 
