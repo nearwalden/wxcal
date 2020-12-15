@@ -3,7 +3,6 @@
 
 import xarray as xr
 import pandas as p
-from prefect
 
 land_limit = 0.8
 
