@@ -5,3 +5,5 @@ Exploring the interaction of the calendar and weather and temperature observatio
 v1 - works without prefect, includes some `atlas` ideas but nothing working
 
 New version is adding in prefect workflow.
+
+`leap.py` looks at impact of leapyear on monthly anomalies.  

@@ -3,53 +3,32 @@
 
 import xarray as xr
 import pandas as p
-from prefect import 
+from prefect import task, Flow
 
 land_limit = 0.8
-
-
-
-# creates a DF with climatology data and day_number added to each record
-def add_clim (ds, dft):
-    dfc = ds['climatology'].to_dataframe()
-    # don't need lat, lon
-    dfc = dfc.drop(['latitude', 'longitude'], 1)
-    dfd = ds['day_of_year'].to_dataframe()
-    # adds day_of_year
-    df = dft.drop(['latitude', 'longitude'], 1)
-    df = df.join(dfd, 'time')
-    print('added day_of_year')
-    # changes to match day_number
-    df['day_number'] = df['day_of_year'] - 1
-    df = df.drop('day_of_year', 1)
-    print('added day_number')
-    df = df.reset_index()
-    df = df.set_index(['day_number', 'map_points'])
-    # df = df.drop('index', 1)
-    print ('reset index for climate data')
-    # add in climatology data
-    df = df.join(dfc)
-    print ('added climatology')
-    df['temperature'] = df['temperature'] + df['climatology']
-    print ('turned temp into real temp')
-    return (df)
-
-# returns df with lat, lon, map_point
-def add_lat_lon (ds, dfm):
-    return df
-
-# returns df with year, month, day, doy and time
-def add_dmy (ds):
-    return df
     
 # LatLong1 version of above
-
 ll1_dir = "daily-1deg-sep2020/"
 ll1_filename = "Complete_TAVG_Daily_LatLong1_"
 ll1_filename_short = "TAVG_LL1_"
 
-# creates a DF with climatology data and day_number added to each record
-def add_clim_ll1 (ds):
+# create a time file for each decade
+@task    
+def process_time (year):
+    path = ll1_dir + ll1_filename + str(year) + ".nc"
+    ds = xr.open_dataset(path)
+    df = ds['year'].to_dataframe()
+    df = df.join(ds['month'].to_dataframe())
+    df = df.join(ds['day'].to_dataframe())  
+    df = df.join(ds['day_of_year'].to_dataframe())              
+    print ("Processed year " + str (year))
+    return (df)
+
+# creates a DF over US with landmass > target     
+@task
+def process_clim_ll1 (year):
+    path = ll1_dir + ll1_filename + str(year) + ".nc"
+    ds = xr.open_dataset(path)
     dft = ds['temperature'].to_dataframe()
     dfc = ds['climatology'].to_dataframe()
     dfd = ds['day_of_year'].to_dataframe()
@@ -83,61 +62,20 @@ def add_clim_ll1 (ds):
     df = df.drop('climatology', 1)
     print ('  turned temp into real temp')
     return (df)
-
-def process_clim_ll1 ():
-    # cycle through years
-    time_offset = 0
-    for offset in range(0, 140, 10):
-        year = 1880 + offset
-        path = ll1_dir + ll1_filename + str(year) + ".nc"
-        ds = xr.open_dataset(path)
-        df = add_clim_ll1 (ds)
-        outpath = ll1_dir + ll1_filename + str(year) + "_temp.csv"
-        df.to_csv (outpath)
-        print ("Processed year " + str (year))
-        if offset == 0:
-            df_all = df
-        else: 
-            # add time_offset
-            df.time += time_offset
-            df_all = df_all.append(df)
-        # figure out max time
-        days = df.time.max()
-        time_offset += days
-    outpath = ll1_dir + ll1_filename + "_all_temp.csv"
-    df_all.to_csv (outpath)
     
-def cleanup_ll1 ():
-    # cycle through years
-    time_offset = 0
-    for offset in range(0, 140, 10):
-        year = 1880 + offset
-        temp_path = ll1_dir + ll1_filename + str(year) + "_temp.csv"
-        df = p.read_csv (temp_path)
-        time_path = ll1_dir + ll1_filename + str(year) + "_time.csv"        
-        df_time = p.read_csv (time_path)
-        df = df.drop(['day_number', 'day_of_year'], 1)
-        df = df.join(df_time.set_index('time'), on='time')
-        outpath = ll1_dir + ll1_filename + str(year) + "_temp.csv"
-        df.to_csv (outpath)
-        print ("Processed year " + str (year))
+
+# join in time
+@task
+def cleanup_ll1 (df, df_time):
+    df = df.drop(['day_number', 'day_of_year'], 1)
+    df = df.join(df_time.set_index('time'), on='time')
+    print ("Processed year " + str (year))
+    return (df)
+    
+@task
+def write_ll1 (df, year):
 
 
-# create a time file for each decade    
-def process_time ():
-    # cycle through years
-    time_offset = 0
-    for offset in range(0, 140, 10):
-        year = 1880 + offset
-        path = ll1_dir + ll1_filename + str(year) + ".nc"
-        ds = xr.open_dataset(path)
-        df = ds['year'].to_dataframe()
-        df = df.join(ds['month'].to_dataframe())
-        df = df.join(ds['day'].to_dataframe())  
-        df = df.join(ds['day_of_year'].to_dataframe())              
-        outpath = ll1_dir + ll1_filename + str(year) + "_time.csv"
-        df.to_csv (outpath)
-        print ("Processed year " + str (year))
 
 
 # extract data based on lat, lon
