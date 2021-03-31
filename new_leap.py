@@ -279,11 +279,12 @@ def four_year_stats(df):
     diff['year4'] = diff.year % 4
     diffg = diff.groupby('year4')
     out = p.DataFrame()
-    out['sum'] = 0
     for loc in locs:
         out[loc] = diffg[loc].mean()
+    out['sum'] = 0
+    for loc in locs:    
         out['sum'] = out['sum'] + out[loc]
-    out['sum'] = out['sum']/len(locs)
+    out['mean'] = out['sum']/len(locs)
     return out
 
 
@@ -313,6 +314,27 @@ def plot_loc_from_df(normaldf, new_leapdf, lat, lon, start, end, path):
 
 
 # plot wrapper when doing one
+def plot_mean(start=1880, end=2020, path=None):
+    normaldf = p.read_csv(OUT_DIR + 'normal_yr.csv')
+    normaldfm = calc_mean(normaldf).set_index('year')
+    new_leapdf = p.read_csv(OUT_DIR + 'new_leap_yr.csv')
+    new_leapdfm = calc_mean(new_leapdf).set_index('year')
+    plot_mean_from_df(normaldfm, new_leapdfm, start, end, path)
+
+
+# plot inner core
+def plot_mean_from_df(normaldf, new_leapdf, start, end, path):
+    plotdf = p.DataFrame()
+    plotdf['normal'] = normaldf['mean']
+    plotdf['new_leap'] = new_leapdf['mean']
+    plt.figure()
+    plotdf[(plotdf.index >= start) & (plotdf.index < end)].plot()
+    plt.legend()
+    if path is not None:
+        plt.savefig(path)
+
+
+# plot wrapper when doing one
 def plot_delta(lat, lon, start=1880, end=2020, path=None):
     normaldf = p.read_csv(OUT_DIR + 'normal_yr.csv').set_index('year')
     new_leapdf = p.read_csv(OUT_DIR + 'new_leap_yr.csv').set_index('year')
@@ -330,4 +352,36 @@ def plot_delta_from_df(normaldf, new_leapdf, lat, lon, start, end, path):
     plotdf[(plotdf.index >= start) & (plotdf.index < end)]['delta'].plot()
     plt.legend()
     if path is not None:
-        plt.savefit(path)
+        plt.savefig(path)
+
+
+# create the 'mean' column
+def calc_mean(df):
+    locs = year_locs(df)
+    df['mean'] = 0
+    for loc in locs:
+        df['mean'] += df[loc]
+    df['mean'] = df['mean']/len(locs)
+    return df
+
+
+# plot wrapper when doing one
+def plot_mean_delta(start=1880, end=2020, path=None):
+    normaldf = p.read_csv(OUT_DIR + 'normal_yr.csv')
+    normaldfm = calc_mean(normaldf).set_index('year')
+    new_leapdf = p.read_csv(OUT_DIR + 'new_leap_yr.csv')
+    new_leapdfm = calc_mean(new_leapdf).set_index('year')
+    plot_mean_delta_from_df(normaldfm, new_leapdfm, start, end, path)
+
+
+# plot inner core
+def plot_mean_delta_from_df(normaldf, new_leapdf, start, end, path):
+    plotdf = p.DataFrame()
+    plotdf['normal'] = normaldf['mean']
+    plotdf['new_leap'] = new_leapdf['mean']
+    plotdf['delta'] = plotdf['new_leap'] - plotdf['normal']
+    plt.figure()
+    plotdf[(plotdf.index >= start) & (plotdf.index < end)]['delta'].plot()
+    plt.legend()
+    if path is not None:
+        plt.savefig(path)
