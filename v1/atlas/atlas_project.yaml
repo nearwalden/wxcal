@@ -1,0 +1,7 @@
+# description of the peak project for atlas
+name: wxcal
+description: "A study of peak everything."
+owner:
+    name: Dave Douglas
+    email: nearwalden@gmail.com
+git: https://github.com/nearwalden/wxcal

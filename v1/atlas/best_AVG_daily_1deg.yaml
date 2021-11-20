@@ -1,0 +1,26 @@
+# The UN population estimate
+type: data
+name: "Berkeley Earth = TAVG, daily, 1degree"
+description:  "Berkeley Earth, daily by 1 degree of lat/lon, downloaded from website."
+created: "9/27/2020"
+shortname: best_avg_daily_1deg
+parameters:
+	Y: [1880, 1890, 1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010]
+source:
+	type: download
+	website:  
+	URLs: 
+		pattern: "http://berkeleyearth.lbl.gov/auto/Global/Gridded/Complete_TAVG_Daily_LatLong1_%Y.nc"
+storage:
+	type: files
+	location:  "file:///Volumes/data/temperature/daily-1deg-sep2020/"
+	files:
+		pattern: "Complete_TAVG_Daily_LatLong1_%Y.nc"
+metadata:
+	timeframe: 
+		start: 1880
+		end: 2020
+	format: netcdf	
+	timeframe: 
+		start: 1880
+		end: 2020
